@@ -1,0 +1,35 @@
+[tool.fltw]
+name = "fltw"
+description = "Freelance Timewise CLI"
+tags = ["time tracking", "timesheet", "freelance", "work"]
+type = "cli"
+command = "fltw"
+
+[tool.dividends]
+name = "dividends-cli"
+description = "Dividend portfolio CLI"
+tags = ["dividends", "dividenden", "stocks", "investing"]
+type = "cli"
+command = "dividends-cli"
+
+[tool.mvapi]
+name = "mvapi"
+description = "Markdown Vault API CLI"
+tags = ["markdown vault", "brain", "notes", "vault"]
+type = "cli"
+command = "mvapi"
+
+[tool.notion]
+name = "notion"
+description = "Notion workspace"
+tags = ["notes", "wiki", "docs"]
+type = "webapp"
+url = "https://notion.so"
+
+[tool.brain-api]
+name = "brain-api"
+description = "AI Brain REST API"
+tags = ["brain", "vault", "api"]
+type = "api"
+base_url = "https://brain.oliver-kiessler-ki-agent.de"
+auth_env = "BRAIN_API_KEY"
