@@ -34,4 +34,47 @@ pub enum Command {
 
     /// Print only the invocation for the best matching tool
     Which { query: Vec<String> },
+
+    /// Add a new tool to the configuration
+    Add {
+        /// Unique tool identifier
+        #[arg(long)]
+        id: String,
+
+        /// Display name
+        #[arg(long)]
+        name: String,
+
+        /// Short description
+        #[arg(long)]
+        description: String,
+
+        /// Tool type: cli, webapp, or api
+        #[arg(long, value_name = "TYPE")]
+        type_: String,
+
+        /// Command to invoke (required for type=cli)
+        #[arg(long)]
+        command: Option<String>,
+
+        /// URL to open (required for type=webapp)
+        #[arg(long)]
+        url: Option<String>,
+
+        /// API base URL (required for type=api)
+        #[arg(long)]
+        base_url: Option<String>,
+
+        /// Environment variable holding the API key (only for type=api)
+        #[arg(long)]
+        auth_env: Option<String>,
+
+        /// Comma-separated list of tags
+        #[arg(long, value_delimiter = ',')]
+        tags: Vec<String>,
+
+        /// Overwrite an existing tool with the same ID
+        #[arg(long)]
+        force: bool,
+    },
 }

@@ -9,6 +9,12 @@ pub enum OutputFormat {
     Json,
 }
 
+impl PartialEq for OutputFormat {
+    fn eq(&self, other: &Self) -> bool {
+        matches!((self, other), (OutputFormat::Human, OutputFormat::Human) | (OutputFormat::Json, OutputFormat::Json))
+    }
+}
+
 impl OutputFormat {
     pub fn from_flag(json: bool) -> Self {
         if json {

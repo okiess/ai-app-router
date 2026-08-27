@@ -1,17 +1,17 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::tool::Tool;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RawConfig {
-    pub tool: HashMap<String, RawTool>,
+    pub tool: BTreeMap<String, RawTool>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RawTool {
     pub name: String,
     pub description: String,
@@ -70,5 +70,41 @@ impl Config {
         }
 
         None
+    }
+
+    pub fn default_path() -> Result<PathBuf> {
+        let dir = dirs::config_dir()
+            .context("could not determine config directory")?
+            .join("ai-app-router");
+        Ok(dir.join("config.toml"))
+    }
+
+    pub fn save(&self, path: &Path) -> Result<()> {
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("failed to create directory {}", parent.display()))?;
+        }
+
+        let mut tools = BTreeMap::<String, RawTool>::new();
+        for tool in &self.tools {
+            tools.insert(
+                tool.id.clone(),
+                RawTool {
+                    name: tool.name.clone(),
+                    description: tool.description.clone(),
+                    tags: tool.tags.clone(),
+                    tool_type: tool.tool_type.clone(),
+                },
+            );
+        }
+
+        let raw = RawConfig { tool: tools };
+        let content = toml::to_string_pretty(&raw)
+            .context("failed to serialize config to TOML")?;
+
+        std::fs::write(path, content)
+            .with_context(|| format!("failed to write config to {}", path.display()))?;
+
+        Ok(())
     }
 }

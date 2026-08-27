@@ -65,6 +65,21 @@ aiar list
 
 Add `--json` for structured output.
 
+## Adding tools
+
+To register a new tool in the config, use:
+
+```bash
+aiar add --id <ID> --name <NAME> --description <DESC> --type <TYPE> \
+         --tags <TAG1,TAG2,...\u003e [type-specific flags]
+```
+
+Required per type:
+
+- `cli`: `--command <CMD>`
+- `webapp`: `--url <URL>`
+- `api`: `--base-url <URL>` (optional `--auth-env <ENV\u003e`)
+
 ## Common mappings
 
 | Task | Tool | Type |

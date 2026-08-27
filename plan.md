@@ -107,6 +107,9 @@ aiar resolve "dividenden" --json
 aiar which markdown-vault       # only command/url for shell pipes
 
 aiar show fltw                  # detail view of one tool
+
+aiar add --id todo --name todo-cli --description "Task tracker" \
+         --type cli --command todo --tags todo,tasks,planning
 ```
 
 ## JSON output (resolve)
@@ -145,6 +148,21 @@ ai-app-router/
     └── tools.toml
 ```
 
+## Adding tools
+
+```bash
+aiar add --id <ID> --name <NAME> --description <DESC> --type <TYPE> \
+         --tags <TAG1,TAG2,...\u003e [type-specific flags]
+```
+
+Type-specific required flags:
+
+- `cli`: `--command <CMD>`
+- `webapp`: `--url <URL>`
+- `api`: `--base-url <URL>` (optional `--auth-env <ENV\u003e`)
+
+Use `--force` to overwrite an existing tool with the same ID.
+
 ## Dependencies
 
 - `clap` — CLI arguments
@@ -160,5 +178,6 @@ ai-app-router/
 - `aiar resolve "time tracking"` resolves to `fltw`.
 - `aiar resolve "dividenden"` resolves to `dividends-cli`.
 - `aiar show fltw` prints details.
+- `aiar add` creates or updates a config entry and preserves existing tools.
 - JSON output is parseable and contains `match` + `candidates`.
 - Example config in `examples/tools.toml` works with all commands.
