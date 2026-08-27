@@ -76,5 +76,9 @@ pub enum Command {
         /// Overwrite an existing tool with the same ID
         #[arg(long)]
         force: bool,
+
+        /// Run interactive prompts for all fields
+        #[arg(short, long)]
+        interactive: bool,
     },
 }

@@ -80,6 +80,8 @@ Required per type:
 - `webapp`: `--url <URL>`
 - `api`: `--base-url <URL>` (optional `--auth-env <ENV\u003e`)
 
+Use `aiar add -i` for a guided, interactive version of the same command.
+
 ## Common mappings
 
 | Task | Tool | Type |

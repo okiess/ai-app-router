@@ -148,7 +148,7 @@ ai-app-router/
     └── tools.toml
 ```
 
-## Adding tools
+## Adding tools (non-interactive)
 
 ```bash
 aiar add --id <ID> --name <NAME> --description <DESC> --type <TYPE> \
@@ -162,6 +162,14 @@ Type-specific required flags:
 - `api`: `--base-url <URL>` (optional `--auth-env <ENV\u003e`)
 
 Use `--force` to overwrite an existing tool with the same ID.
+
+## Adding tools (interactive)
+
+```bash
+aiar add -i
+```
+
+Starts a guided prompt for every field. Any flags passed on the CLI are used as defaults.
 
 ## Dependencies
 
