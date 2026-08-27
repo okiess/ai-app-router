@@ -1,5 +1,5 @@
 use anyhow::Result;
-use comfy_table::{Table, modifiers::UTF8_ROUND_CORNERS, presets::UTF8_FULL};
+use comfy_table::{Table, presets::UTF8_FULL};
 
 use crate::resolver::Match;
 use crate::tool::Tool;
@@ -36,8 +36,7 @@ pub fn list_tools(tools: &[Tool], format: OutputFormat, with_tags: bool) -> Resu
         OutputFormat::Human => {
             let mut table = Table::new();
             table
-                .load_preset(UTF8_FULL)
-                .apply_modifier(UTF8_ROUND_CORNERS)
+                .load_style(UTF8_FULL.with_rounded_corners())
                 .set_header(vec!["ID", "Name", "Type", "Description"]);
 
             if with_tags {
