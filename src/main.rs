@@ -57,7 +57,8 @@ fn run() -> Result<()> {
             interactive,
         } => {
             let target_path = add_target_path(cli.config.as_deref())?;
-            let mut config = Config::load(Some(&target_path)).unwrap_or(Config { tools: Vec::new() });
+            let mut config =
+                Config::load(Some(&target_path)).unwrap_or(Config { tools: Vec::new() });
 
             let (id, name, description, tool_type, tags) = if interactive {
                 interactive_tool_fields(
@@ -115,6 +116,7 @@ fn run() -> Result<()> {
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 fn interactive_tool_fields(
     id: String,
     name: String,
@@ -125,7 +127,13 @@ fn interactive_tool_fields(
     base_url: Option<String>,
     auth_env: Option<String>,
     tags: Vec<String>,
-) -> Result<(String, String, String, ai_app_router::tool::ToolType, Vec<String>)> {
+) -> Result<(
+    String,
+    String,
+    String,
+    ai_app_router::tool::ToolType,
+    Vec<String>,
+)> {
     use dialoguer::{Confirm, Input, Select};
 
     let id = if id.is_empty() {
@@ -224,7 +232,10 @@ fn interactive_tool_fields(
             .with_prompt("Tags (comma-separated)")
             .allow_empty(true)
             .interact_text()?;
-        raw.split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect()
+        raw.split(',')
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .collect()
     } else {
         tags
     };
@@ -233,16 +244,15 @@ fn interactive_tool_fields(
 }
 
 fn load_config(path: Option<&std::path::Path>) -> Result<Config> {
-    Config::load(path).context("failed to load configuration; create ~/.ai-app-router.toml or use --config")
+    Config::load(path)
+        .context("failed to load configuration; create ~/.ai-app-router.toml or use --config")
 }
 
 fn add_target_path(cli_config: Option<&std::path::Path>) -> Result<std::path::PathBuf> {
     if let Some(path) = cli_config {
         return Ok(path.to_path_buf());
     }
-    Config::discover_path()
-        .map(Ok)
-        .unwrap_or_else(|| Config::default_path())
+    Config::discover_path().map_or_else(Config::default_path, Ok)
 }
 
 fn build_tool_type(
@@ -262,7 +272,9 @@ fn build_tool_type(
             Ok(ToolType::Cli { command })
         }
         "webapp" => {
-            let url = url.context("--url is required for type=webapp")?.to_string();
+            let url = url
+                .context("--url is required for type=webapp")?
+                .to_string();
             Ok(ToolType::Webapp { url })
         }
         "api" => {

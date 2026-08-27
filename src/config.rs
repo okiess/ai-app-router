@@ -99,8 +99,7 @@ impl Config {
         }
 
         let raw = RawConfig { tool: tools };
-        let content = toml::to_string_pretty(&raw)
-            .context("failed to serialize config to TOML")?;
+        let content = toml::to_string_pretty(&raw).context("failed to serialize config to TOML")?;
 
         std::fs::write(path, content)
             .with_context(|| format!("failed to write config to {}", path.display()))?;

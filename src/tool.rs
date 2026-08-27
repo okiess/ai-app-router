@@ -3,9 +3,16 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "snake_case", tag = "type")]
 pub enum ToolType {
-    Cli { command: String },
-    Webapp { url: String },
-    Api { base_url: String, auth_env: Option<String> },
+    Cli {
+        command: String,
+    },
+    Webapp {
+        url: String,
+    },
+    Api {
+        base_url: String,
+        auth_env: Option<String>,
+    },
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]

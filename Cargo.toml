@@ -2,6 +2,15 @@
 name = "ai-app-router"
 version = "0.1.0"
 edition = "2024"
+authors = ["Oliver Kiessler <kiessler@inceedo.com>"]
+description = "Map natural-language tasks to configured CLI, webapp, or API tools"
+license = "MIT"
+repository = "https://github.com/okiess/ai-app-router"
+homepage = "https://github.com/okiess/ai-app-router"
+documentation = "https://github.com/okiess/ai-app-router/blob/main/README.md"
+keywords = ["cli", "agent", "tools", "router", "ai"]
+categories = ["command-line-utilities"]
+rust-version = "1.85"
 
 [[bin]]
 name = "aiar"

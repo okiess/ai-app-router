@@ -11,7 +11,10 @@ pub enum OutputFormat {
 
 impl PartialEq for OutputFormat {
     fn eq(&self, other: &Self) -> bool {
-        matches!((self, other), (OutputFormat::Human, OutputFormat::Human) | (OutputFormat::Json, OutputFormat::Json))
+        matches!(
+            (self, other),
+            (OutputFormat::Human, OutputFormat::Human) | (OutputFormat::Json, OutputFormat::Json)
+        )
     }
 }
 
@@ -77,7 +80,11 @@ pub fn show_tool(tool: &Tool, format: OutputFormat) -> Result<()> {
             println!("Description: {}", tool.description);
             println!("Tags:        {}", tool.tags.join(", "));
             println!("Invocation:  {}", tool.invocation());
-            if let crate::tool::ToolType::Api { auth_env: Some(env), .. } = &tool.tool_type {
+            if let crate::tool::ToolType::Api {
+                auth_env: Some(env),
+                ..
+            } = &tool.tool_type
+            {
                 println!("Auth env:    {}", env);
             }
         }
@@ -136,9 +143,13 @@ pub fn resolve_output(query: &str, matches: &[Match], format: OutputFormat) -> R
             if let Some(best) = best {
                 if rest.is_empty() || best.score - rest[0].score > 0.15 {
                     response.match_ = Some(ResolveMatchJson::from_match(best));
-                    response.candidates = rest.iter().map(|m| ResolveMatchJson::from_match(m)).collect();
+                    response.candidates = rest
+                        .iter()
+                        .map(|m| ResolveMatchJson::from_match(m))
+                        .collect();
                 } else {
-                    response.candidates = matches.iter().map(ResolveMatchJson::from_match).collect();
+                    response.candidates =
+                        matches.iter().map(ResolveMatchJson::from_match).collect();
                 }
             }
 
