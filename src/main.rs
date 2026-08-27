@@ -61,10 +61,10 @@ fn run() -> Result<()> {
 
             let (id, name, description, tool_type, tags) = if interactive {
                 interactive_tool_fields(
-                    id,
-                    name,
-                    description,
-                    type_,
+                    id.unwrap_or_default(),
+                    name.unwrap_or_default(),
+                    description.unwrap_or_default(),
+                    type_.unwrap_or_default(),
                     command,
                     url,
                     base_url,
@@ -73,11 +73,11 @@ fn run() -> Result<()> {
                 )?
             } else {
                 (
-                    id,
-                    name,
-                    description,
+                    id.context("--id is required")?,
+                    name.context("--name is required")?,
+                    description.context("--description is required")?,
                     build_tool_type(
-                        &type_,
+                        &type_.context("--type is required")?,
                         command.as_deref(),
                         url.as_deref(),
                         base_url.as_deref(),

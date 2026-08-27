@@ -37,21 +37,21 @@ pub enum Command {
 
     /// Add a new tool to the configuration
     Add {
-        /// Unique tool identifier
+        /// Unique tool identifier (optional in interactive mode)
         #[arg(long)]
-        id: String,
+        id: Option<String>,
 
-        /// Display name
+        /// Display name (optional in interactive mode)
         #[arg(long)]
-        name: String,
+        name: Option<String>,
 
-        /// Short description
+        /// Short description (optional in interactive mode)
         #[arg(long)]
-        description: String,
+        description: Option<String>,
 
-        /// Tool type: cli, webapp, or api
+        /// Tool type: cli, webapp, or api (optional in interactive mode)
         #[arg(long, value_name = "TYPE")]
-        type_: String,
+        type_: Option<String>,
 
         /// Command to invoke (required for type=cli)
         #[arg(long)]
